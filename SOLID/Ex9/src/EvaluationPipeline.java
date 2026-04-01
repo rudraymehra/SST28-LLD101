@@ -1,6 +1,7 @@
 public class EvaluationPipeline {
     // DIP violation: high-level module constructs concretes directly
-    public void evaluate(Submission sub) {
+    public void evaluate(Submission sub)
+    {
         Rubric rubric = new Rubric();
         PlagiarismChecker pc = new PlagiarismChecker();
         CodeGrader grader = new CodeGrader();

@@ -1,9 +1,11 @@
 public class ClassroomController {
     private final DeviceRegistry reg;
 
-    public ClassroomController(DeviceRegistry reg) { this.reg = reg; }
+    public ClassroomController(DeviceRegistry reg)
+    { this.reg = reg; }
 
-    public void startClass() {
+    public void startClass()
+    {
         SmartClassroomDevice pj = reg.getFirstOfType("Projector");
         pj.powerOn();
         pj.connectInput("HDMI-1");
@@ -18,7 +20,8 @@ public class ClassroomController {
         System.out.println("Attendance scanned: present=" + scan.scanAttendance());
     }
 
-    public void endClass() {
+    public void endClass()
+    {
         System.out.println("Shutdown sequence:");
         reg.getFirstOfType("Projector").powerOff();
         reg.getFirstOfType("LightsPanel").powerOff();

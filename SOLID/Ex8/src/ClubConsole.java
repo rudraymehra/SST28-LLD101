@@ -3,11 +3,13 @@ public class ClubConsole {
     private final MinutesBook minutes;
     private final EventPlanner events;
 
-    public ClubConsole(BudgetLedger ledger, MinutesBook minutes, EventPlanner events) {
+    public ClubConsole(BudgetLedger ledger, MinutesBook minutes, EventPlanner events)
+    {
         this.ledger = ledger; this.minutes = minutes; this.events = events;
     }
 
-    public void run() {
+    public void run()
+    {
         ClubAdminTools treasurer = new TreasurerTool(ledger);
         ClubAdminTools secretary = new SecretaryTool(minutes);
         ClubAdminTools lead = new EventLeadTool(events);

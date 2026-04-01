@@ -9,7 +9,7 @@ import java.lang.reflect.Constructor;
 public class ReflectionAttack {
 
     public static void main(String[] args) throws Exception {
-        MetricsRegistry singleton = MetricsRegistry.getInstance();
+        MetricsRegistry singleton = MetricsRegistry.fetchInstance();
 
         Constructor<MetricsRegistry> ctor = MetricsRegistry.class.getDeclaredConstructor();
         ctor.setAccessible(true);

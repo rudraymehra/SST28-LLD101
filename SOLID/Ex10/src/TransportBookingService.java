@@ -1,6 +1,7 @@
 public class TransportBookingService {
     // DIP violation: direct concretes
-    public void book(TripRequest req) {
+    public void book(TripRequest req)
+    {
         DistanceCalculator dist = new DistanceCalculator();
         DriverAllocator alloc = new DriverAllocator();
         PaymentGateway pay = new PaymentGateway();

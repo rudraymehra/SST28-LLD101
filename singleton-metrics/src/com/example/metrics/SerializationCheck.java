@@ -3,13 +3,13 @@ package com.example.metrics;
 import java.io.*;
 
 /**
- * Serializes and deserializes the registry.
+ * Serializes and deserializes the metricsStore.
  * Starter will typically produce a NEW instance. After fix, it must return the same singleton.
  */
 public class SerializationCheck {
 
     public static void main(String[] args) throws Exception {
-        MetricsRegistry a = MetricsRegistry.getInstance();
+        MetricsRegistry a = MetricsRegistry.fetchInstance();
         a.setCount("REQUESTS_TOTAL", 42);
 
         byte[] bytes = serialize(a);
@@ -23,14 +23,16 @@ public class SerializationCheck {
 
     private static byte[] serialize(MetricsRegistry r) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos))
+    {
             oos.writeObject(r);
         }
         return baos.toByteArray();
     }
 
     private static MetricsRegistry deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes)))
+    {
             return (MetricsRegistry) ois.readObject();
         }
     }

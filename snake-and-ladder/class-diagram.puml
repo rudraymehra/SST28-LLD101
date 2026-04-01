@@ -1,0 +1,122 @@
+@startuml SnakeLadder_ClassDiagram
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' ───── Enum ─────
+enum DifficultyLevel {
+    EASY
+    HARD
+}
+
+' ───── Interface — Board Entity ─────
+interface BoardEntity <<Abstraction>> {
+    + getTriggerCell() : int
+    + getDestinationCell() : int
+    + label() : String
+}
+
+' ───── Concrete Entities ─────
+class Snake {
+    - head : int
+    - tail : int
+    + getTriggerCell() : int
+    + getDestinationCell() : int
+    + label() : String
+}
+
+class Ladder {
+    - bottom : int
+    - top : int
+    + getTriggerCell() : int
+    + getDestinationCell() : int
+    + label() : String
+}
+
+' ───── Interface — Dice Strategy ─────
+interface Dice <<Strategy>> {
+    + roll() : int
+    + faces() : int
+}
+
+' ───── Concrete Dice ─────
+class NormalDice {
+    - numFaces : int
+    - random : Random
+    + roll() : int
+    + faces() : int
+}
+
+class CrookedDice {
+    - EVEN_FACES : int[]
+    - random : Random
+    + roll() : int
+    + faces() : int
+}
+
+' ───── Board ─────
+class Board {
+    - size : int
+    - winningCell : int
+    - entityMap : Map<Integer, BoardEntity>
+    + getWinningCell() : int
+    + resolvePosition(current : int, diceRoll : int) : int
+    + isCellOccupied(cell : int) : boolean
+    + printLayout() : void
+}
+
+' ───── Factory ─────
+class BoardFactory {
+    - BoardFactory()
+    + {static} create(size : int) : Board
+    - {static} pickUnused(rng : Random, used : Set, min : int, max : int) : int
+}
+
+' ───── Player ─────
+class Player {
+    - name : String
+    - position : int
+    + getName() : String
+    + getPosition() : int
+    + moveTo(cell : int) : void
+}
+
+' ───── Game Engine ─────
+class GameEngine {
+    - board : Board
+    - dice : Dice
+    - turnQueue : Queue<Player>
+    - finishOrder : List<Player>
+    + start() : void
+    - printResults() : void
+}
+
+' ───── Entry Point ─────
+class Main {
+    + {static} main(args : String[]) : void
+    - {static} buildDice(level : DifficultyLevel) : Dice
+}
+
+' ───── Relationships ─────
+
+Snake ..|> BoardEntity
+Ladder ..|> BoardEntity
+
+NormalDice ..|> Dice
+CrookedDice ..|> Dice
+
+Board --> BoardEntity : contains
+
+BoardFactory ..> Board : creates
+BoardFactory ..> Snake : creates
+BoardFactory ..> Ladder : creates
+
+GameEngine --> Board : uses
+GameEngine --> Dice : uses
+GameEngine --> Player : manages
+
+Main ..> GameEngine : creates
+Main ..> BoardFactory : calls
+Main ..> DifficultyLevel : reads
+
+@enduml

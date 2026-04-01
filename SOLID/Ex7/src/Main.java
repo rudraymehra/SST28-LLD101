@@ -1,5 +1,6 @@
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         System.out.println("=== Smart Classroom ===");
         DeviceRegistry reg = new DeviceRegistry();
         reg.add(new Projector());

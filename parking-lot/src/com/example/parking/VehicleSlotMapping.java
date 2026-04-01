@@ -1,0 +1,30 @@
+package com.example.parking;
+
+import java.util.List;
+import java.util.Map;
+
+public final class VehicleSlotMapping{
+
+    private static final Map<VehicleType, List<SlotType>> COMPATIBLE = 
+    Map.of(
+        VehicleType.TWO_WHEELER, List.of(SlotType.SMALL, SlotType.MEDIUM, SlotType.LARGE),
+        VehicleType.CAR,         List.of(SlotType.MEDIUM, SlotType.LARGE),
+        VehicleType.BUS,         List.of(SlotType.LARGE)
+    
+    );
+
+    private VehicleSlotMapping()
+    { }
+
+    public static List<SlotType> compatibleSlots(VehicleType vehicleType)
+    {
+        List<SlotType> slots = COMPATIBLE.get(vehicleType);
+
+        if (slots == null)
+    {
+            throw new IllegalArgumentException("Unknown vehicle type: " + vehicleType);
+        }
+        
+        return slots;
+    }
+}

@@ -1,5 +1,6 @@
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         System.out.println("=== Notification Demo ===");
         AuditLog audit = new AuditLog();
 
@@ -12,17 +13,9 @@ public class Main {
         email.send(n);
         sms.send(n);
 
-        // ===== OLD: needed try/catch because WhatsApp THREW exceptions =====
-        // try {
-        //     wa.send(n);
-        // } catch (RuntimeException ex) {
-        //     System.out.println("WA ERROR: " + ex.getMessage());
-        //     audit.add("WA failed");
-        // }
-
-        // ===== NEW: no try/catch! Just check the result. =====
         SendResult waResult = wa.send(n);
-        if (!waResult.success) {
+        if (!waResult.success)
+    {
             System.out.println("WA ERROR: " + waResult.error);
             audit.add("WA failed");
         }

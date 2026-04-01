@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Spawns many threads racing on getInstance().
+ * Spawns many threads racing on fetchInstance().
  * Starter is expected to sometimes create >1 instance. After fix, must always be 1.
  */
 public class ConcurrencyCheck {
@@ -23,14 +23,16 @@ public class ConcurrencyCheck {
 
         Set<Integer> identities = ConcurrentHashMap.newKeySet();
 
-        for (int i = 0; i < threads; i++) {
+        for (int i = 0; i < threads; i++)
+    {
             pool.submit(() -> {
                 ready.countDown();
                 try {
                     start.await();
-                    MetricsRegistry r = MetricsRegistry.getInstance();
+                    MetricsRegistry r = MetricsRegistry.fetchInstance();
                     identities.add(System.identityHashCode(r));
-                } catch (InterruptedException ignored) {
+                } catch (InterruptedException ignored)
+    {
                     Thread.currentThread().interrupt();
                 } finally {
                     done.countDown();
